@@ -20,4 +20,4 @@ var server = http.createServer(function(request, response) {
     response.end();
 });
 server.listen(port);
-console.log("Server is listening");
+console.log("Server is not listening");
