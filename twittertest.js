@@ -9,12 +9,17 @@ var client = new Twitter({
     access_token_secret: 'nq7OeQCRq8cQxBnZ1e5nDR5bWeyC4mBzlNs7qmro0Jh5q'
 });
 
-http.createServer(function(request, response) {
-    response.writeHead(200, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin' : '*' });
+http.createServer(function (request, response) {
+    response.writeHead(200, {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'});
 
-client.get('search/tweets', {q: 'lolcat'}, function(error, tweets){
-    console.log(tweets);
-    response.end(JSON.stringify(tweets));
-});
+    client.get('search/tweets', {q: 'lolcat'}, function (error, tweets) {
+        console.log(tweets);
+
+        var json = [];
+        for (var i = 0; i < tweets.statuses.length; i++) {
+            json.push({name: tweets.statuses[i].user.name, text: tweets.statuses[i].text});
+        }
+        response.end(JSON.stringify(json));
+    });
 
 }).listen(port);
